@@ -140,6 +140,7 @@ def opensqlitedb():		#从sqlite数据源开始工作
 	else:
 		try:
 			cx = sqlite3.connect(db_file)
+			cx.text_factory = str
 			cu = cx.cursor()
 		except:
 			print "can not find sqlite db file\n"
@@ -262,6 +263,7 @@ def getNumPage(segnum='', num='', url=''):		#获取号码页详细数据
 					f.write(segnum+','+num+','+url+",insert sqlitdb faild\n")
 				return False
 			else:
+				print "%d write db ok" % insdata['mobile_num']
 				return True
 
 def getneednum(url='', step=10):		#获取所有未记录的号码信息数据
@@ -300,7 +302,7 @@ def getneednum(url='', step=10):		#获取所有未记录的号码信息数据
 
 		try:
 			gevent.joinall(threads)
-			print "%d-%d is end\n" % (offset+1,limit+offset)
+			# print "%d-%d is end\n" % (offset+1,limit+offset)
 		except Exception as e:
 			print "Gevent catch error\n"
 
